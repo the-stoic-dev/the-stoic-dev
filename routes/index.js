@@ -1,16 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-const items = [
-  {
-    _id: 'a',
-    content: 'hello',
-  },
-  {
-    _id: 'b',
-    content: 'world',
-  },
-]
+const items = []
 
 router.get('/items', (req, res) => {
   res.json({
@@ -20,8 +11,12 @@ router.get('/items', (req, res) => {
 })
 
 router.post('/items', (req, res) => {
-  console.log(req)
-  res.end()
+  const { body } = req
+  items.push(body)
+  res.json({
+    status: 'success',
+    item: body,
+  })
 })
 
-module.exports = router;
+module.exports = router
