@@ -28,5 +28,28 @@ describe('routes/index', () => {
           })
       })
     })
+
+    describe('GETing items', () => {
+      it('should return a list of items', () => {
+        return request(app)
+          .get('/items')
+          .set('Accept', 'application/json')
+          .expect('Content-Type', /json/)
+          .expect(200)
+          .then(response => {
+            // testing response form
+            expect(response.body).toMatchObject({
+              status: 'success',
+            })
+
+            const { items } = response.body
+            expect(items).toBeTruthy()
+            return
+
+            // comparing values we sent with what was saved
+            expect(item).toMatchObject(someCoolItem)
+          })
+      })
+    })
   })
 })
