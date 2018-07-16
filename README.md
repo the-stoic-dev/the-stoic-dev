@@ -13,3 +13,14 @@ yarn
 ```
 yarn dev
 ```
+
+###
+
+POST a new item
+
+```
+curl --header "Content-Type: application/json" \
+  --request POST \
+  --data '{"content": "test from terminal"}' \
+  http://localhost:3000/items
+```
