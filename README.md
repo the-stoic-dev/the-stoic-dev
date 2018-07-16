@@ -24,3 +24,11 @@ curl --header "Content-Type: application/json" \
   --data '{"content": "test from terminal"}' \
   http://localhost:3000/items
 ```
+
+### Test
+
+To run tests
+
+```
+yarn test
+```
