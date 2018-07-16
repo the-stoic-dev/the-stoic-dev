@@ -16,16 +16,11 @@ db.once('open', () => {
 })
 
 
-var kittySchema = mongoose.Schema({
-  name: String
+const itemSchema = mongoose.Schema({
+  content: String,
 })
 
-var Kitten = mongoose.model('Kitten', kittySchema)
-var silence = new Kitten({ name: 'Silence' })
-
-silence.save(function (err, fluffy) {
-  if (err) return console.error(err)
-})
+const ItemModel = mongoose.model('Item', itemSchema)
 
 const items = []
 
@@ -38,10 +33,17 @@ router.get('/items', (req, res) => {
 
 router.post('/items', (req, res) => {
   const { body } = req
-  items.push(body)
-  res.json({
-    status: 'success',
-    item: body,
+  const newItem = new ItemModel(body)
+
+  newItem.save((err, item) => {
+    if (err) {
+      // TODO: handle error
+      return console.error(err)
+    }
+    res.json({
+      status: 'success',
+      item,
+    })
   })
 })
 
