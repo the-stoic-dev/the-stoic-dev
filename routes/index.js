@@ -15,25 +15,28 @@ db.once('open', () => {
   console.log('db connection is open')
 })
 
-
 const itemSchema = mongoose.Schema({
   content: String,
 })
 
-const ItemModel = mongoose.model('Item', itemSchema)
-
-const items = []
+const Item = mongoose.model('Item', itemSchema)
 
 router.get('/items', (req, res) => {
-  res.json({
-    status: 'success',
-    items,
+  Item.find((err, items) => {
+    if (err) {
+      // TODO: handle error
+      return console.error(err)
+    }
+    res.json({
+      status: 'success',
+      items,
+    })
   })
 })
 
 router.post('/items', (req, res) => {
   const { body } = req
-  const newItem = new ItemModel(body)
+  const newItem = new Item(body)
 
   newItem.save((err, item) => {
     if (err) {
