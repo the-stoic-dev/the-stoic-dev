@@ -2,7 +2,12 @@ var express = require('express');
 var router = express.Router();
 
 const mongoose = require('mongoose')
-mongoose.connect('mongodb://localhost/the_irate_dev', {
+const isTestMode = process.env.NODE_ENV === 'test'
+const database = isTestMode
+  ? 'the_irate_dev-test'
+  : 'the_irate_dev'
+console.log('using database', database)
+mongoose.connect(`mongodb://localhost/${database}`, {
   // TODO: node:52734) DeprecationWarning: current URL string parser is
   // deprecated, and will be removed in a future version. To use the new parser,
   // pass option { useNewUrlParser: true } to MongoClient.connect.
