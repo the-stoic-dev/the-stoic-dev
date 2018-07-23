@@ -1,6 +1,12 @@
 # Work Log
 
+* Add linter
+* Add error handling in API routes
+
 ## Will Do
+* Add support to PUT an item.
+
+## Did
 * Look at Postman for API poking.
 * Add support to DELETE an item.
 

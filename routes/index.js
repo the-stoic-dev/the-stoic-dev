@@ -5,8 +5,8 @@ const mongoose = require('mongoose')
 const getConnectionString = () => {
   const isTestMode = process.env.NODE_ENV === 'test'
   const database = isTestMode
-    ? 'the_irate_dev-test'
-    : 'the_irate_dev'
+    ? 'the_stoic_dev-test'
+    : 'the_stoic_dev'
   return `mongodb://localhost/${database}`
 }
 
@@ -70,6 +70,28 @@ router.delete('/items/:_id', (req, res) => {
       status: 'success',
     })
   })
+})
+
+router.put('/items/:_id', (req, res) => {
+  const { _id } = req.params
+  const { body } = req
+
+    Item.findByIdAndUpdate(_id, body, (err, originalItem, item) => {
+      if (err || !originalItem) {
+        // TODO: handle error
+        return console.error(err)
+      }
+
+      // TODO: Consider situation where we PUT data fields that were not saved.
+      // This response is lying, seeming to have persisted the data.
+      res.json({
+        status: 'success',
+        item: {
+          ...originalItem.toJSON(),
+          ...body,
+        },
+      })
+    })
 })
 
 module.exports = router

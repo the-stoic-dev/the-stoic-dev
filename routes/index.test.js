@@ -58,7 +58,6 @@ describe('routes/index', () => {
           const { item } = response.body
           return item
         })
-      //  Now we test that we can GET the saved item.
         .then((item) => {
           return request(app)
             .delete(`/items/${item._id}`)
@@ -69,6 +68,44 @@ describe('routes/index', () => {
               // testing response form
               expect(response.body).toMatchObject({
                 status: 'success',
+              })
+            })
+        })
+    })
+
+    it('should save the item and upate it', () => {
+      const someCoolItem = { content: "original content" }
+      // Save a new item.
+      return request(app)
+        .post('/items')
+        .send(someCoolItem)
+        .set('Accept', 'application/json')
+        .expect('Content-Type', /json/)
+        .expect(200)
+        .then(response => {
+          const { item } = response.body
+          return item
+        })
+
+        .then((item) => {
+          const { _id } = item
+          return request(app)
+            .put(`/items/${item._id}`)
+            .send({
+              _id,
+              content: 'cool new content',
+            })
+            .set('Accept', 'application/json')
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .then(response => {
+              // testing response form
+              expect(response.body).toMatchObject({
+                status: 'success',
+              })
+              expect(response.body.item).toMatchObject({
+                _id,
+                content: 'cool new content',
               })
             })
         })
