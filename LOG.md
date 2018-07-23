@@ -1,9 +1,10 @@
 # Work Log
 
+## Will Do
 * Add linter
 * Add error handling in API routes
 
-## Will Do
+## Did
 * Add support to PUT an item.
 
 ## Did

@@ -62,7 +62,7 @@ router.delete('/items/:_id', (req, res) => {
   const { _id } = req.params
 
   Item.findByIdAndRemove(_id, (err) => {
-    if (err) {k
+    if (err) {
       // TODO: handle error
       return console.error(err)
     }
@@ -76,7 +76,7 @@ router.put('/items/:_id', (req, res) => {
   const { _id } = req.params
   const { body } = req
 
-    Item.findByIdAndUpdate(_id, body, (err, originalItem, item) => {
+    Item.findByIdAndUpdate(_id, body, (err, originalItem) => {
       if (err || !originalItem) {
         // TODO: handle error
         return console.error(err)
