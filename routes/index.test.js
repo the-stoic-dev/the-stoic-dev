@@ -24,7 +24,7 @@ describe('routes/index', () => {
           expect(item).toMatchObject(someCoolItem)
           return item
         })
-        //  Now we test that we can GET the saved item.
+      //  Now we test that we can GET the saved item.
         .then((item) => {
           return request(app)
             .get('/items')
@@ -45,7 +45,7 @@ describe('routes/index', () => {
         })
     })
 
-  fit('should save the item and delete it', () => {
+    it('should save the item and delete it', () => {
       const someCoolItem = { content: "delete me, please" }
       // Save a new item.
       return request(app)
@@ -55,21 +55,13 @@ describe('routes/index', () => {
         .expect('Content-Type', /json/)
         .expect(200)
         .then(response => {
-          // testing response form
-          expect(response.body).toMatchObject({
-            status: 'success',
-            item: {},
-          })
-
           const { item } = response.body
-          // comparing values we sent with what was saved
-          expect(item).toMatchObject(someCoolItem)
           return item
         })
-        //  Now we test that we can GET the saved item.
+      //  Now we test that we can GET the saved item.
         .then((item) => {
           return request(app)
-            .get('/items')
+            .delete(`/items/${item._id}`)
             .set('Accept', 'application/json')
             .expect('Content-Type', /json/)
             .expect(200)
@@ -78,11 +70,6 @@ describe('routes/index', () => {
               expect(response.body).toMatchObject({
                 status: 'success',
               })
-
-              const { items } = response.body
-              expect(items).toBeTruthy()
-              const savedItem = items.find(x => x._id === item._id)
-              expect(savedItem).toMatchObject(item)
             })
         })
     })

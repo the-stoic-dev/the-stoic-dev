@@ -58,4 +58,18 @@ router.post('/items', (req, res) => {
   })
 })
 
+router.delete('/items/:_id', (req, res) => {
+  const { _id } = req.params
+
+  Item.findByIdAndRemove(_id, (err) => {
+    if (err) {k
+      // TODO: handle error
+      return console.error(err)
+    }
+    res.json({
+      status: 'success',
+    })
+  })
+})
+
 module.exports = router
