@@ -73,7 +73,7 @@ describe('routes/index', () => {
         })
     })
 
-    it('should save the item and upate it', () => {
+    it('should save the item and update it', () => {
       const someCoolItem = { content: "original content" }
       // Save a new item.
       return request(app)
@@ -108,6 +108,19 @@ describe('routes/index', () => {
                 content: 'cool new content',
               })
             })
+        })
+    })
+
+    it('should respond with an error message', () => {
+      return request(app)
+        .put('/items/not-a-real-id')
+        .set('Accept', 'application/json')
+        .expect('Content-Type', /json/)
+        .then(response => {
+          expect(response.body).toMatchObject({
+            status: 'error',
+            message: 'item not found',
+          })
         })
     })
   })

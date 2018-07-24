@@ -29,11 +29,17 @@ const itemSchema = mongoose.Schema({
 
 const Item = mongoose.model('Item', itemSchema)
 
+const sendError = (res, message) => {
+  res.json({
+    status: 'error',
+    message,
+  })
+}
+
 router.get('/items', (req, res) => {
   Item.find((err, items) => {
     if (err) {
-      // TODO: handle error
-      return console.error(err)
+      return sendError(res, 'unable to get items')
     }
     res.json({
       status: 'success',
@@ -48,8 +54,7 @@ router.post('/items', (req, res) => {
 
   newItem.save((err, item) => {
     if (err) {
-      // TODO: handle error
-      return console.error(err)
+      return sendError(res, 'unable to create item')
     }
     res.json({
       status: 'success',
@@ -63,8 +68,7 @@ router.delete('/items/:_id', (req, res) => {
 
   Item.findByIdAndRemove(_id, (err) => {
     if (err) {
-      // TODO: handle error
-      return console.error(err)
+      return sendError(res, 'unable to remove item')
     }
     res.json({
       status: 'success',
@@ -78,8 +82,7 @@ router.put('/items/:_id', (req, res) => {
 
     Item.findByIdAndUpdate(_id, body, (err, originalItem) => {
       if (err || !originalItem) {
-        // TODO: handle error
-        return console.error(err)
+        return sendError(res, 'item not found')
       }
 
       // TODO: Consider situation where we PUT data fields that were not saved.
