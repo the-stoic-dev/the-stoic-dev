@@ -29,3 +29,7 @@ yarn test
 ```
 yarn lint
 ```
+
+## TODO
+
+* Add error handling in API routes
