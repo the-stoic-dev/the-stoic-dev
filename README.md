@@ -5,7 +5,6 @@ Pet project for https://www.youtube.com/channel/UClxz_RH0drPKlRfumi9EW8A
 
 ## TODO
 
-* Return a single item by id
 
 
 ## Installation

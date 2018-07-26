@@ -48,6 +48,19 @@ router.get('/items', (req, res) => {
   })
 })
 
+router.get('/items/:_id', (req, res) => {
+  const { _id } = req.params
+  Item.findById(_id, (err, item) => {
+    if (err || !item) {
+      return sendError(res, `unable to get item "${_id}"`)
+    }
+    res.json({
+      status: 'success',
+      item,
+    })
+  })
+})
+
 router.post('/items', (req, res) => {
   const { body } = req
   const newItem = new Item(body)

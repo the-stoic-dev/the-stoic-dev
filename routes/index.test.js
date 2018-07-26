@@ -103,10 +103,17 @@ describe('routes/index', () => {
               expect(response.body).toMatchObject({
                 status: 'success',
               })
-              expect(response.body.item).toMatchObject({
-                _id,
-                content: 'cool new content',
-              })
+
+              return request(app)
+                .get(`/items/${response.body.item._id}`)
+                .expect(200)
+                .then(response => {
+                  const savedItem = response.body.item
+                  expect(savedItem).toMatchObject({
+                    _id,
+                    content: 'cool new content',
+                  })
+                })
             })
         })
     })
